@@ -63,7 +63,7 @@ export function EnumeratorArea() {
     );
   }
 
-  if (!area || area.areaStatus === "completed") {
+  if (!area) {
     return (
       <div className="container mx-auto max-w-4xl space-y-6 px-4">
         <Card className="overflow-hidden">
@@ -117,8 +117,8 @@ export function EnumeratorArea() {
             <div className="grid gap-6 md:grid-cols-3">
               {[
                 {
-                  name: "Sanjeet Paudel",
-                  phone: "9857842052",
+                  name: "Subash Subedi",
+                  phone: "9852080217",
                   role: "Team Lead",
                 },
                 {
