@@ -1,0 +1,21 @@
+services:
+  odk-fetcher:
+    image: isresearch/gadhawa-sms:latest
+    container_name: gadhawa-sms-next-js
+    restart: always
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - DATABASE_URL=${DATABASE_URL}
+      - NEXT_PUBLIC_APP_URL=${NEXT_PUBLIC_APP_URL}
+      - BUCKET_NAME=${BUCKET_NAME}
+      - MINIO_ENDPOINT=${MINIO_ENDPOINT}
+      - MINIO_PORT=${MINIO_PORT}
+      - MINIO_CLIENT_ACCESS_KEY=${MINIO_CLIENT_ACCESS_KEY}
+      - MINIO_CLIENT_SECRET_KEY=${MINIO_CLIENT_SECRET_KEY}
+      - MINIO_USE_SSL=${MINIO_USE_SSL}
+      - REDIS_URL=${REDIS_URL}
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+  
