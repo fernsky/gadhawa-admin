@@ -1,5 +1,5 @@
 services:
-  odk-fetcher:
+  gadhawa-sms:
     image: isresearch/gadhawa-sms:latest
     container_name: gadhawa-sms-next-js
     restart: always
