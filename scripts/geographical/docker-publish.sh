@@ -2,7 +2,7 @@
 
 # Configuration
 DOCKER_USERNAME="isresearch"
-IMAGE_NAME="odk-fetcher"
+IMAGE_NAME="gadhawa-sms"
 VERSION=$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]')
 
 # Login to Docker Hub (you should have DOCKER_PASSWORD set as environment variable)

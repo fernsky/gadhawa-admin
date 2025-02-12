@@ -25,6 +25,7 @@ const config = {
   experimental: {
     serverComponentsExternalPackages: ["pg"],
   },
+  output: 'standalone',
 };
 
 export default config;
