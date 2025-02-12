@@ -78,9 +78,16 @@ export const enumeratorPhotoProcedures = {
     }),
 
   getAvatarUrl: protectedProcedure
-    .input(z.string())
+    .input(z.string().min(1, "User ID is required"))
     .query(async ({ ctx, input }) => {
       try {
+        if (!env.BUCKET_NAME) {
+          throw new TRPCError({
+            code: "INTERNAL_SERVER_ERROR",
+            message: "Storage bucket not configured",
+          });
+        }
+
         const user = await ctx.db.query.users.findFirst({
           columns: { avatar: true },
           where: eq(users.id, input),
@@ -95,6 +102,7 @@ export const enumeratorPhotoProcedures = {
           user.avatar,
           24 * 60 * 60, // 24 hours expiry
         );
+        console.log("Generated avatar URL:", presignedUrl);
 
         return presignedUrl;
       } catch (error) {
