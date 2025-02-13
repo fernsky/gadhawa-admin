@@ -117,8 +117,8 @@ export function EnumeratorArea() {
             <div className="grid gap-6 md:grid-cols-3">
               {[
                 {
-                  name: "Subash Subedi",
-                  phone: "9852080217",
+                  name: "Sanjeet Paudel",
+                  phone: "9857842052",
                   role: "Team Lead",
                 },
                 {
