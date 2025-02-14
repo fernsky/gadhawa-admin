@@ -44,4 +44,6 @@ export const areaRouter = createTRPCRouter({
   getUnassignedWardAreasofEnumerator,
   getAreaDetails,
   getAreasByWardforRequest,
+  createPointRequest,
+  getPointRequestsByWard
 });

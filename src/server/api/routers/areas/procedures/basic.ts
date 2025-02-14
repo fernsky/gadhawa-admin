@@ -1,11 +1,12 @@
 import { createTRPCRouter, protectedProcedure } from "../../../trpc";
 import { z } from "zod";
-import { areas, users } from "@/server/db/schema/basic";
+import { areas, users, pointRequests } from "@/server/db/schema/basic";
 import { and, cosineDistance, eq, sql } from "drizzle-orm";
 import {
   Area,
   areaQuerySchema,
   createAreaSchema,
+  createPointRequestSchema,
   updateAreaSchema,
 } from "../area.schema";
 import { nanoid } from "nanoid";
