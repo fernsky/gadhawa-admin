@@ -4,7 +4,16 @@ import { useMapViewStore } from "@/store/toggle-layer-store";
 import { api } from "@/trpc/react";
 import { Map, AlertTriangle, Loader2 } from "lucide-react";
 import dynamic from "next/dynamic";
-import { useState, useEffect } from "react";
+import {
+  useState,
+  useEffect,
+  AwaitedReactNode,
+  JSXElementConstructor,
+  Key,
+  ReactElement,
+  ReactNode,
+  ReactPortal,
+} from "react";
 import type { LeafletMouseEvent } from "leaflet";
 import "leaflet/dist/leaflet.css";
 import type { GeoJsonObject } from "geojson";
@@ -148,7 +157,7 @@ const RequestPointMap = () => {
       setMessage("");
       setIsDialogOpen(false);
     },
-    onError: (error) => {
+    onError: (error: { message: any }) => {
       toast.error(error.message || "Failed to submit request");
     },
   });
@@ -316,41 +325,82 @@ const RequestPointMap = () => {
                 ))}
 
                 {/* Point Requests */}
-                {pointRequests.data?.map((request) => {
-                  if (!request.coordinates?.coordinates) return null;
-                  const [lng, lat] = request.coordinates.coordinates;
-                  return (
-                    <Marker
-                      key={request.id}
-                      position={[lat, lng]}
-                      icon={L.divIcon({
-                        className: "custom-div-icon",
-                        html: `<div class="bg-yellow-500 w-3 h-3 rounded-full border-2 border-white shadow-md"></div>`,
-                        iconSize: [12, 12],
-                        iconAnchor: [6, 6],
-                      })}
-                    >
-                      <Popup>
-                        <div className="space-y-2 p-1">
-                          <p className="font-medium">Area Request</p>
-                          <p className="text-sm text-muted-foreground">
-                            Requested by: {request.enumeratorName}
-                          </p>
-                          <p className="text-sm text-muted-foreground">
-                            Status:{" "}
-                            <span className="capitalize">{request.status}</span>
-                          </p>
-                          <p className="text-sm text-muted-foreground">
-                            Message: {request.message}
-                          </p>
-                          <p className="text-xs text-muted-foreground">
-                            {new Date(request.createdAt).toLocaleDateString()}
-                          </p>
-                        </div>
-                      </Popup>
-                    </Marker>
-                  );
-                })}
+                {pointRequests.data?.map(
+                  (request: {
+                    coordinates: { coordinates: [any, any] };
+                    id: Key | null | undefined;
+                    enumeratorName:
+                      | string
+                      | number
+                      | bigint
+                      | boolean
+                      | ReactElement<any, string | JSXElementConstructor<any>>
+                      | Iterable<ReactNode>
+                      | ReactPortal
+                      | Promise<AwaitedReactNode>
+                      | null
+                      | undefined;
+                    status:
+                      | string
+                      | number
+                      | bigint
+                      | boolean
+                      | ReactElement<any, string | JSXElementConstructor<any>>
+                      | Iterable<ReactNode>
+                      | ReactPortal
+                      | Promise<AwaitedReactNode>
+                      | null
+                      | undefined;
+                    message:
+                      | string
+                      | number
+                      | bigint
+                      | boolean
+                      | ReactElement<any, string | JSXElementConstructor<any>>
+                      | Iterable<ReactNode>
+                      | ReactPortal
+                      | Promise<AwaitedReactNode>
+                      | null
+                      | undefined;
+                    createdAt: string | number | Date;
+                  }) => {
+                    if (!request.coordinates?.coordinates) return null;
+                    const [lng, lat] = request.coordinates.coordinates;
+                    return (
+                      <Marker
+                        key={request.id}
+                        position={[lat, lng]}
+                        icon={L.divIcon({
+                          className: "custom-div-icon",
+                          html: `<div class="bg-yellow-500 w-3 h-3 rounded-full border-2 border-white shadow-md"></div>`,
+                          iconSize: [12, 12],
+                          iconAnchor: [6, 6],
+                        })}
+                      >
+                        <Popup>
+                          <div className="space-y-2 p-1">
+                            <p className="font-medium">Area Request</p>
+                            <p className="text-sm text-muted-foreground">
+                              Requested by: {request.enumeratorName}
+                            </p>
+                            <p className="text-sm text-muted-foreground">
+                              Status:{" "}
+                              <span className="capitalize">
+                                {request.status}
+                              </span>
+                            </p>
+                            <p className="text-sm text-muted-foreground">
+                              Message: {request.message}
+                            </p>
+                            <p className="text-xs text-muted-foreground">
+                              {new Date(request.createdAt).toLocaleDateString()}
+                            </p>
+                          </div>
+                        </Popup>
+                      </Marker>
+                    );
+                  },
+                )}
 
                 {/* Selected Point */}
                 {selectedPoint && (

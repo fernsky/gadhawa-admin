@@ -15,7 +15,9 @@ import {
   getLayerAreas,
   getAreaBoundaryByCode,
   getAreasWithSubmissionCounts,
-  getAreaBoundariesByCodes
+  getAreaBoundariesByCodes,
+  createPointRequest,
+  getPointRequestsByWard
 } from "./procedures/basic";
 import {
   requestArea,
