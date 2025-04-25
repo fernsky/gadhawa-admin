@@ -44,7 +44,7 @@ export const setupPDFHeader = async (doc: jsPDF, details: HeaderDetails) => {
     align: "center",
   });
   doc.setFontSize(10);
-  doc.text("Biratnagar, Koshi Province", doc.internal.pageSize.width / 2, 22, {
+  doc.text("Dang, Lumbini Province", doc.internal.pageSize.width / 2, 22, {
     align: "center",
   });
 
@@ -72,6 +72,7 @@ export const setupPDFHeader = async (doc: jsPDF, details: HeaderDetails) => {
   doc.rect(10, 40, doc.internal.pageSize.width - 20, 20);
 
   // Left side details - slightly smaller text
+  console.log(details);
   doc.setFontSize(9);
   doc.text(`Enumerator: ${details.enumeratorName}`, 15, 46);
   doc.text(`ID: ${details.enumeratorId.slice(0, 8)}`, 15, 52);
