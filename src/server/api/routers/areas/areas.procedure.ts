@@ -16,8 +16,10 @@ import {
   getAreaBoundaryByCode,
   getAreasWithSubmissionCounts,
   getAreaBoundariesByCodes,
-  createPointRequest,
-  getPointRequestsByWard
+  getAreaCodesByUserId,
+  getAreasByEnumeratorName,
+  getAreasSummaryByEnumerator,
+  getAllAreasWithStatus
 } from "./procedures/basic";
 import {
   requestArea,
@@ -46,6 +48,7 @@ export const areaRouter = createTRPCRouter({
   getUnassignedWardAreasofEnumerator,
   getAreaDetails,
   getAreasByWardforRequest,
-  createPointRequest,
-  getPointRequestsByWard
+  getAreasByEnumeratorName,
+  getAreasSummaryByEnumerator,
+  getAllAreasWithStatus
 });
