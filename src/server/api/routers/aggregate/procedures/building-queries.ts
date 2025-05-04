@@ -8,7 +8,7 @@ import {
 } from "../schemas/building-schema";
 import { TRPCError } from "@trpc/server";
 import { and, eq, ilike, sql } from "drizzle-orm";
-import { kerabariAggregateBuilding } from "@/server/db/schema/aggregate-building";
+import { gadhawaAggregateBuilding } from "@/server/db/schema/aggregate-building";
 import { env } from "@/env";
 import { surveyAttachments } from "@/server/db/schema";
 import { generateMediaUrls } from "../utils/media-utils";
@@ -24,32 +24,32 @@ export const getAllBuildings = publicProcedure
 
       if (filters.wardId) {
         filterConditions.push(
-          eq(kerabariAggregateBuilding.ward_number, parseInt(filters.wardId)),
+          eq(gadhawaAggregateBuilding.ward_number, parseInt(filters.wardId)),
         );
       }
 
       if (filters.areaCode) {
         filterConditions.push(
-          eq(kerabariAggregateBuilding.area_code, parseInt(filters.areaCode)),
+          eq(gadhawaAggregateBuilding.area_code, parseInt(filters.areaCode)),
         );
       }
 
       if (filters.enumeratorId) {
         filterConditions.push(
-          eq(kerabariAggregateBuilding.enumerator_id, filters.enumeratorId),
+          eq(gadhawaAggregateBuilding.enumerator_id, filters.enumeratorId),
         );
       }
 
       if (filters.mapStatus) {
         filterConditions.push(
-          eq(kerabariAggregateBuilding.map_status, filters.mapStatus),
+          eq(gadhawaAggregateBuilding.map_status, filters.mapStatus),
         );
       }
 
       if (filters.buildingOwnership) {
         filterConditions.push(
           eq(
-            kerabariAggregateBuilding.building_ownership_status,
+            gadhawaAggregateBuilding.building_ownership_status,
             filters.buildingOwnership,
           ),
         );
@@ -57,18 +57,18 @@ export const getAllBuildings = publicProcedure
 
       if (filters.buildingBase) {
         filterConditions.push(
-          eq(kerabariAggregateBuilding.building_base, filters.buildingBase),
+          eq(gadhawaAggregateBuilding.building_base, filters.buildingBase),
         );
       }
 
       if (filters.hasHouseholds !== undefined) {
         if (filters.hasHouseholds) {
           filterConditions.push(
-            sql`jsonb_array_length(${kerabariAggregateBuilding.households}) > 0`,
+            sql`jsonb_array_length(${gadhawaAggregateBuilding.households}) > 0`,
           );
         } else {
           filterConditions.push(
-            sql`(${kerabariAggregateBuilding.households} IS NULL OR jsonb_array_length(${kerabariAggregateBuilding.households}) = 0)`,
+            sql`(${gadhawaAggregateBuilding.households} IS NULL OR jsonb_array_length(${gadhawaAggregateBuilding.households}) = 0)`,
           );
         }
       }
@@ -76,27 +76,27 @@ export const getAllBuildings = publicProcedure
       if (filters.hasBusinesses !== undefined) {
         if (filters.hasBusinesses) {
           filterConditions.push(
-            sql`jsonb_array_length(${kerabariAggregateBuilding.businesses}) > 0`,
+            sql`jsonb_array_length(${gadhawaAggregateBuilding.businesses}) > 0`,
           );
         } else {
           filterConditions.push(
-            sql`(${kerabariAggregateBuilding.businesses} IS NULL OR jsonb_array_length(${kerabariAggregateBuilding.businesses}) = 0)`,
+            sql`(${gadhawaAggregateBuilding.businesses} IS NULL OR jsonb_array_length(${gadhawaAggregateBuilding.businesses}) = 0)`,
           );
         }
       }
 
       if (filters.fromDate && filters.toDate) {
         filterConditions.push(
-          sql`${kerabariAggregateBuilding.building_survey_date} BETWEEN ${filters.fromDate}::timestamp AND ${filters.toDate}::timestamp`,
+          sql`${gadhawaAggregateBuilding.building_survey_date} BETWEEN ${filters.fromDate}::timestamp AND ${filters.toDate}::timestamp`,
         );
       }
 
       if (filters.searchTerm) {
         filterConditions.push(
           sql`(
-            ${ilike(kerabariAggregateBuilding.locality, `%${filters.searchTerm}%`)} OR
-            ${ilike(kerabariAggregateBuilding.building_owner_name, `%${filters.searchTerm}%`)} OR
-            ${ilike(kerabariAggregateBuilding.enumerator_name, `%${filters.searchTerm}%`)}
+            ${ilike(gadhawaAggregateBuilding.locality, `%${filters.searchTerm}%`)} OR
+            ${ilike(gadhawaAggregateBuilding.building_owner_name, `%${filters.searchTerm}%`)} OR
+            ${ilike(gadhawaAggregateBuilding.enumerator_name, `%${filters.searchTerm}%`)}
           )`,
         );
       }
@@ -125,20 +125,20 @@ export const getAllBuildings = publicProcedure
     const [data, totalCount] = await Promise.all([
       ctx.db
         .select({
-          id: kerabariAggregateBuilding.id,
-          buildingId: kerabariAggregateBuilding.building_id,
-          surveyed_at: kerabariAggregateBuilding.building_survey_date,
-          wardNumber: kerabariAggregateBuilding.ward_number,
-          areaCode: kerabariAggregateBuilding.area_code,
-          locality: kerabariAggregateBuilding.locality,
-          ownerName: kerabariAggregateBuilding.building_owner_name,
-          enumeratorName: kerabariAggregateBuilding.enumerator_name,
-          totalFamilies: kerabariAggregateBuilding.total_families,
-          totalBusinesses: kerabariAggregateBuilding.total_businesses,
-          mapStatus: kerabariAggregateBuilding.map_status,
-          created_at: kerabariAggregateBuilding.created_at,
+          id: gadhawaAggregateBuilding.id,
+          buildingId: gadhawaAggregateBuilding.building_id,
+          surveyed_at: gadhawaAggregateBuilding.building_survey_date,
+          wardNumber: gadhawaAggregateBuilding.ward_number,
+          areaCode: gadhawaAggregateBuilding.area_code,
+          locality: gadhawaAggregateBuilding.locality,
+          ownerName: gadhawaAggregateBuilding.building_owner_name,
+          enumeratorName: gadhawaAggregateBuilding.enumerator_name,
+          totalFamilies: gadhawaAggregateBuilding.total_families,
+          totalBusinesses: gadhawaAggregateBuilding.total_businesses,
+          mapStatus: gadhawaAggregateBuilding.map_status,
+          created_at: gadhawaAggregateBuilding.created_at,
         })
-        .from(kerabariAggregateBuilding)
+        .from(gadhawaAggregateBuilding)
         .where(conditions)
         .orderBy(sql`${sql.identifier(actualSortBy)} ${sql.raw(sortOrder)}`)
         .limit(limit)
@@ -146,7 +146,7 @@ export const getAllBuildings = publicProcedure
 
       ctx.db
         .select({ count: sql<number>`count(*)` })
-        .from(kerabariAggregateBuilding)
+        .from(gadhawaAggregateBuilding)
         .where(conditions)
         .then((result) => result[0]?.count || 0),
     ]);
@@ -166,8 +166,8 @@ export const getBuildingById = publicProcedure
   .query(async ({ ctx, input }) => {
     const building = await ctx.db
       .select()
-      .from(kerabariAggregateBuilding)
-      .where(eq(kerabariAggregateBuilding.id, input.id))
+      .from(gadhawaAggregateBuilding)
+      .where(eq(gadhawaAggregateBuilding.id, input.id))
       .limit(1);
 
     if (!building[0]) {
@@ -211,25 +211,25 @@ export const getBuildingsByWard = publicProcedure
     const [data, totalCount] = await Promise.all([
       ctx.db
         .select({
-          id: kerabariAggregateBuilding.id,
-          locality: kerabariAggregateBuilding.locality,
-          areaCode: kerabariAggregateBuilding.area_code,
-          ownerName: kerabariAggregateBuilding.building_owner_name,
-          totalFamilies: kerabariAggregateBuilding.total_families,
-          totalBusinesses: kerabariAggregateBuilding.total_businesses,
-          lat: kerabariAggregateBuilding.building_gps_latitude,
-          lng: kerabariAggregateBuilding.building_gps_longitude,
+          id: gadhawaAggregateBuilding.id,
+          locality: gadhawaAggregateBuilding.locality,
+          areaCode: gadhawaAggregateBuilding.area_code,
+          ownerName: gadhawaAggregateBuilding.building_owner_name,
+          totalFamilies: gadhawaAggregateBuilding.total_families,
+          totalBusinesses: gadhawaAggregateBuilding.total_businesses,
+          lat: gadhawaAggregateBuilding.building_gps_latitude,
+          lng: gadhawaAggregateBuilding.building_gps_longitude,
         })
-        .from(kerabariAggregateBuilding)
-        .where(eq(kerabariAggregateBuilding.ward_number, parseInt(wardId)))
-        .orderBy(kerabariAggregateBuilding.area_code)
+        .from(gadhawaAggregateBuilding)
+        .where(eq(gadhawaAggregateBuilding.ward_number, parseInt(wardId)))
+        .orderBy(gadhawaAggregateBuilding.area_code)
         .limit(limit)
         .offset(offset),
 
       ctx.db
         .select({ count: sql<number>`count(*)` })
-        .from(kerabariAggregateBuilding)
-        .where(eq(kerabariAggregateBuilding.ward_number, parseInt(wardId)))
+        .from(gadhawaAggregateBuilding)
+        .where(eq(gadhawaAggregateBuilding.ward_number, parseInt(wardId)))
         .then((result) => result[0]?.count || 0),
     ]);
 
@@ -251,25 +251,25 @@ export const getBuildingsByAreaCode = publicProcedure
     const [data, totalCount] = await Promise.all([
       ctx.db
         .select({
-          id: kerabariAggregateBuilding.id,
-          locality: kerabariAggregateBuilding.locality,
-          wardNumber: kerabariAggregateBuilding.ward_number,
-          ownerName: kerabariAggregateBuilding.building_owner_name,
-          lat: kerabariAggregateBuilding.building_gps_latitude,
-          lng: kerabariAggregateBuilding.building_gps_longitude,
-          gpsAccuracy: kerabariAggregateBuilding.building_gps_accuracy,
-          totalFamilies: kerabariAggregateBuilding.total_families,
-          totalBusinesses: kerabariAggregateBuilding.total_businesses,
+          id: gadhawaAggregateBuilding.id,
+          locality: gadhawaAggregateBuilding.locality,
+          wardNumber: gadhawaAggregateBuilding.ward_number,
+          ownerName: gadhawaAggregateBuilding.building_owner_name,
+          lat: gadhawaAggregateBuilding.building_gps_latitude,
+          lng: gadhawaAggregateBuilding.building_gps_longitude,
+          gpsAccuracy: gadhawaAggregateBuilding.building_gps_accuracy,
+          totalFamilies: gadhawaAggregateBuilding.total_families,
+          totalBusinesses: gadhawaAggregateBuilding.total_businesses,
         })
-        .from(kerabariAggregateBuilding)
-        .where(eq(kerabariAggregateBuilding.area_code, parseInt(areaCode)))
+        .from(gadhawaAggregateBuilding)
+        .where(eq(gadhawaAggregateBuilding.area_code, parseInt(areaCode)))
         .limit(limit)
         .offset(offset),
 
       ctx.db
         .select({ count: sql<number>`count(*)` })
-        .from(kerabariAggregateBuilding)
-        .where(eq(kerabariAggregateBuilding.area_code, parseInt(areaCode)))
+        .from(gadhawaAggregateBuilding)
+        .where(eq(gadhawaAggregateBuilding.area_code, parseInt(areaCode)))
         .then((result) => result[0]?.count || 0),
     ]);
 
@@ -306,10 +306,10 @@ export const getBuildingsByEnumerator = publicProcedure
 
     let condition = sql`TRUE`;
     if (enumeratorId) {
-      condition = eq(kerabariAggregateBuilding.enumerator_id, enumeratorId);
+      condition = eq(gadhawaAggregateBuilding.enumerator_id, enumeratorId);
     } else if (enumeratorName) {
       condition = ilike(
-        kerabariAggregateBuilding.enumerator_name,
+        gadhawaAggregateBuilding.enumerator_name,
         `%${enumeratorName}%`,
       );
     }
@@ -317,24 +317,24 @@ export const getBuildingsByEnumerator = publicProcedure
     const [data, totalCount] = await Promise.all([
       ctx.db
         .select({
-          id: kerabariAggregateBuilding.id,
-          wardNumber: kerabariAggregateBuilding.ward_number,
-          areaCode: kerabariAggregateBuilding.area_code,
-          locality: kerabariAggregateBuilding.locality,
-          ownerName: kerabariAggregateBuilding.building_owner_name,
-          surveyDate: kerabariAggregateBuilding.building_survey_date,
-          totalFamilies: kerabariAggregateBuilding.total_families,
-          totalBusinesses: kerabariAggregateBuilding.total_businesses,
+          id: gadhawaAggregateBuilding.id,
+          wardNumber: gadhawaAggregateBuilding.ward_number,
+          areaCode: gadhawaAggregateBuilding.area_code,
+          locality: gadhawaAggregateBuilding.locality,
+          ownerName: gadhawaAggregateBuilding.building_owner_name,
+          surveyDate: gadhawaAggregateBuilding.building_survey_date,
+          totalFamilies: gadhawaAggregateBuilding.total_families,
+          totalBusinesses: gadhawaAggregateBuilding.total_businesses,
         })
-        .from(kerabariAggregateBuilding)
+        .from(gadhawaAggregateBuilding)
         .where(condition)
-        .orderBy(kerabariAggregateBuilding.building_survey_date)
+        .orderBy(gadhawaAggregateBuilding.building_survey_date)
         .limit(limit)
         .offset(offset),
 
       ctx.db
         .select({ count: sql<number>`count(*)` })
-        .from(kerabariAggregateBuilding)
+        .from(gadhawaAggregateBuilding)
         .where(condition)
         .then((result) => result[0]?.count || 0),
     ]);
@@ -353,11 +353,11 @@ export const getBuildingStats = publicProcedure.query(async ({ ctx }) => {
   const stats = await ctx.db
     .select({
       totalBuildings: sql<number>`count(*)`,
-      totalHouseholds: sql<number>`sum(case when jsonb_array_length(${kerabariAggregateBuilding.households}) > 0 then ${kerabariAggregateBuilding.total_families} else 0 end)`,
-      totalBusinesses: sql<number>`sum(case when jsonb_array_length(${kerabariAggregateBuilding.businesses}) > 0 then ${kerabariAggregateBuilding.total_businesses} else 0 end)`,
-      avgFamiliesPerBuilding: sql<number>`avg(${kerabariAggregateBuilding.total_families})`,
+      totalHouseholds: sql<number>`sum(case when jsonb_array_length(${gadhawaAggregateBuilding.households}) > 0 then ${gadhawaAggregateBuilding.total_families} else 0 end)`,
+      totalBusinesses: sql<number>`sum(case when jsonb_array_length(${gadhawaAggregateBuilding.businesses}) > 0 then ${gadhawaAggregateBuilding.total_businesses} else 0 end)`,
+      avgFamiliesPerBuilding: sql<number>`avg(${gadhawaAggregateBuilding.total_families})`,
     })
-    .from(kerabariAggregateBuilding);
+    .from(gadhawaAggregateBuilding);
 
   return stats[0];
 });
@@ -373,32 +373,32 @@ export const getAllBuildingsInfinite = publicProcedure
 
       if (filters.wardId) {
         filterConditions.push(
-          eq(kerabariAggregateBuilding.ward_number, parseInt(filters.wardId)),
+          eq(gadhawaAggregateBuilding.ward_number, parseInt(filters.wardId)),
         );
       }
 
       if (filters.areaCode) {
         filterConditions.push(
-          eq(kerabariAggregateBuilding.area_code, parseInt(filters.areaCode)),
+          eq(gadhawaAggregateBuilding.area_code, parseInt(filters.areaCode)),
         );
       }
 
       if (filters.enumeratorId) {
         filterConditions.push(
-          eq(kerabariAggregateBuilding.enumerator_id, filters.enumeratorId),
+          eq(gadhawaAggregateBuilding.enumerator_id, filters.enumeratorId),
         );
       }
 
       if (filters.mapStatus) {
         filterConditions.push(
-          eq(kerabariAggregateBuilding.map_status, filters.mapStatus),
+          eq(gadhawaAggregateBuilding.map_status, filters.mapStatus),
         );
       }
 
       if (filters.buildingOwnership) {
         filterConditions.push(
           eq(
-            kerabariAggregateBuilding.building_ownership_status,
+            gadhawaAggregateBuilding.building_ownership_status,
             filters.buildingOwnership,
           ),
         );
@@ -406,18 +406,18 @@ export const getAllBuildingsInfinite = publicProcedure
 
       if (filters.buildingBase) {
         filterConditions.push(
-          eq(kerabariAggregateBuilding.building_base, filters.buildingBase),
+          eq(gadhawaAggregateBuilding.building_base, filters.buildingBase),
         );
       }
 
       if (filters.hasHouseholds !== undefined) {
         if (filters.hasHouseholds) {
           filterConditions.push(
-            sql`jsonb_array_length(${kerabariAggregateBuilding.households}) > 0`,
+            sql`jsonb_array_length(${gadhawaAggregateBuilding.households}) > 0`,
           );
         } else {
           filterConditions.push(
-            sql`(${kerabariAggregateBuilding.households} IS NULL OR jsonb_array_length(${kerabariAggregateBuilding.households}) = 0)`,
+            sql`(${gadhawaAggregateBuilding.households} IS NULL OR jsonb_array_length(${gadhawaAggregateBuilding.households}) = 0)`,
           );
         }
       }
@@ -425,27 +425,27 @@ export const getAllBuildingsInfinite = publicProcedure
       if (filters.hasBusinesses !== undefined) {
         if (filters.hasBusinesses) {
           filterConditions.push(
-            sql`jsonb_array_length(${kerabariAggregateBuilding.businesses}) > 0`,
+            sql`jsonb_array_length(${gadhawaAggregateBuilding.businesses}) > 0`,
           );
         } else {
           filterConditions.push(
-            sql`(${kerabariAggregateBuilding.businesses} IS NULL OR jsonb_array_length(${kerabariAggregateBuilding.businesses}) = 0)`,
+            sql`(${gadhawaAggregateBuilding.businesses} IS NULL OR jsonb_array_length(${gadhawaAggregateBuilding.businesses}) = 0)`,
           );
         }
       }
 
       if (filters.fromDate && filters.toDate) {
         filterConditions.push(
-          sql`${kerabariAggregateBuilding.building_survey_date} BETWEEN ${filters.fromDate}::timestamp AND ${filters.toDate}::timestamp`,
+          sql`${gadhawaAggregateBuilding.building_survey_date} BETWEEN ${filters.fromDate}::timestamp AND ${filters.toDate}::timestamp`,
         );
       }
 
       if (filters.searchTerm) {
         filterConditions.push(
           sql`(
-            ${ilike(kerabariAggregateBuilding.locality, `%${filters.searchTerm}%`)} OR
-            ${ilike(kerabariAggregateBuilding.building_owner_name, `%${filters.searchTerm}%`)} OR
-            ${ilike(kerabariAggregateBuilding.enumerator_name, `%${filters.searchTerm}%`)}
+            ${ilike(gadhawaAggregateBuilding.locality, `%${filters.searchTerm}%`)} OR
+            ${ilike(gadhawaAggregateBuilding.building_owner_name, `%${filters.searchTerm}%`)} OR
+            ${ilike(gadhawaAggregateBuilding.enumerator_name, `%${filters.searchTerm}%`)}
           )`,
         );
       }
@@ -477,20 +477,20 @@ export const getAllBuildingsInfinite = publicProcedure
     const [data, totalCount] = await Promise.all([
       ctx.db
         .select({
-          id: kerabariAggregateBuilding.id,
-          buildingId: kerabariAggregateBuilding.building_id,
-          surveyed_at: kerabariAggregateBuilding.building_survey_date,
-          wardNumber: kerabariAggregateBuilding.ward_number,
-          areaCode: kerabariAggregateBuilding.area_code,
-          locality: kerabariAggregateBuilding.locality,
-          ownerName: kerabariAggregateBuilding.building_owner_name,
-          enumeratorName: kerabariAggregateBuilding.enumerator_name,
-          totalFamilies: kerabariAggregateBuilding.total_families,
-          totalBusinesses: kerabariAggregateBuilding.total_businesses,
-          mapStatus: kerabariAggregateBuilding.map_status,
-          created_at: kerabariAggregateBuilding.created_at,
+          id: gadhawaAggregateBuilding.id,
+          buildingId: gadhawaAggregateBuilding.building_id,
+          surveyed_at: gadhawaAggregateBuilding.building_survey_date,
+          wardNumber: gadhawaAggregateBuilding.ward_number,
+          areaCode: gadhawaAggregateBuilding.area_code,
+          locality: gadhawaAggregateBuilding.locality,
+          ownerName: gadhawaAggregateBuilding.building_owner_name,
+          enumeratorName: gadhawaAggregateBuilding.enumerator_name,
+          totalFamilies: gadhawaAggregateBuilding.total_families,
+          totalBusinesses: gadhawaAggregateBuilding.total_businesses,
+          mapStatus: gadhawaAggregateBuilding.map_status,
+          created_at: gadhawaAggregateBuilding.created_at,
         })
-        .from(kerabariAggregateBuilding)
+        .from(gadhawaAggregateBuilding)
         .where(conditions)
         .orderBy(sql`${sql.identifier(actualSortBy)} ${sql.raw(sortOrder)}`)
         .limit(limit)
@@ -498,7 +498,7 @@ export const getAllBuildingsInfinite = publicProcedure
 
       ctx.db
         .select({ count: sql<number>`count(*)` })
-        .from(kerabariAggregateBuilding)
+        .from(gadhawaAggregateBuilding)
         .where(conditions)
         .then((result) => result[0]?.count || 0),
     ]);
@@ -525,32 +525,32 @@ export const getAggregatedBuildingData = publicProcedure
 
       if (filters.wardId) {
         filterConditions.push(
-          eq(kerabariAggregateBuilding.ward_number, parseInt(filters.wardId)),
+          eq(gadhawaAggregateBuilding.ward_number, parseInt(filters.wardId)),
         );
       }
 
       if (filters.areaCode) {
         filterConditions.push(
-          eq(kerabariAggregateBuilding.area_code, parseInt(filters.areaCode)),
+          eq(gadhawaAggregateBuilding.area_code, parseInt(filters.areaCode)),
         );
       }
 
       if (filters.enumeratorId) {
         filterConditions.push(
-          eq(kerabariAggregateBuilding.enumerator_id, filters.enumeratorId),
+          eq(gadhawaAggregateBuilding.enumerator_id, filters.enumeratorId),
         );
       }
 
       if (filters.mapStatus) {
         filterConditions.push(
-          eq(kerabariAggregateBuilding.map_status, filters.mapStatus),
+          eq(gadhawaAggregateBuilding.map_status, filters.mapStatus),
         );
       }
 
       if (filters.buildingOwnership) {
         filterConditions.push(
           eq(
-            kerabariAggregateBuilding.building_ownership_status,
+            gadhawaAggregateBuilding.building_ownership_status,
             filters.buildingOwnership,
           ),
         );
@@ -558,18 +558,18 @@ export const getAggregatedBuildingData = publicProcedure
 
       if (filters.buildingBase) {
         filterConditions.push(
-          eq(kerabariAggregateBuilding.building_base, filters.buildingBase),
+          eq(gadhawaAggregateBuilding.building_base, filters.buildingBase),
         );
       }
 
       if (filters.hasHouseholds !== undefined) {
         if (filters.hasHouseholds) {
           filterConditions.push(
-            sql`jsonb_array_length(${kerabariAggregateBuilding.households}) > 0`,
+            sql`jsonb_array_length(${gadhawaAggregateBuilding.households}) > 0`,
           );
         } else {
           filterConditions.push(
-            sql`(${kerabariAggregateBuilding.households} IS NULL OR jsonb_array_length(${kerabariAggregateBuilding.households}) = 0)`,
+            sql`(${gadhawaAggregateBuilding.households} IS NULL OR jsonb_array_length(${gadhawaAggregateBuilding.households}) = 0)`,
           );
         }
       }
@@ -577,27 +577,27 @@ export const getAggregatedBuildingData = publicProcedure
       if (filters.hasBusinesses !== undefined) {
         if (filters.hasBusinesses) {
           filterConditions.push(
-            sql`jsonb_array_length(${kerabariAggregateBuilding.businesses}) > 0`,
+            sql`jsonb_array_length(${gadhawaAggregateBuilding.businesses}) > 0`,
           );
         } else {
           filterConditions.push(
-            sql`(${kerabariAggregateBuilding.businesses} IS NULL OR jsonb_array_length(${kerabariAggregateBuilding.businesses}) = 0)`,
+            sql`(${gadhawaAggregateBuilding.businesses} IS NULL OR jsonb_array_length(${gadhawaAggregateBuilding.businesses}) = 0)`,
           );
         }
       }
 
       if (filters.fromDate && filters.toDate) {
         filterConditions.push(
-          sql`${kerabariAggregateBuilding.building_survey_date} BETWEEN ${filters.fromDate}::timestamp AND ${filters.toDate}::timestamp`,
+          sql`${gadhawaAggregateBuilding.building_survey_date} BETWEEN ${filters.fromDate}::timestamp AND ${filters.toDate}::timestamp`,
         );
       }
 
       if (filters.searchTerm) {
         filterConditions.push(
           sql`(
-            ${ilike(kerabariAggregateBuilding.locality, `%${filters.searchTerm}%`)} OR
-            ${ilike(kerabariAggregateBuilding.building_owner_name, `%${filters.searchTerm}%`)} OR
-            ${ilike(kerabariAggregateBuilding.enumerator_name, `%${filters.searchTerm}%`)}
+            ${ilike(gadhawaAggregateBuilding.locality, `%${filters.searchTerm}%`)} OR
+            ${ilike(gadhawaAggregateBuilding.building_owner_name, `%${filters.searchTerm}%`)} OR
+            ${ilike(gadhawaAggregateBuilding.enumerator_name, `%${filters.searchTerm}%`)}
           )`,
         );
       }
@@ -611,7 +611,7 @@ export const getAggregatedBuildingData = publicProcedure
     // Query the buildings with all their nested data
     const buildingsWithNestedData = await ctx.db
       .select()
-      .from(kerabariAggregateBuilding)
+      .from(gadhawaAggregateBuilding)
       .where(conditions)
       .orderBy(sql`${sql.identifier(sortBy)} ${sql.raw(sortOrder)}`)
       .limit(limit)
@@ -620,7 +620,7 @@ export const getAggregatedBuildingData = publicProcedure
     // Get the total count for pagination
     const totalCount = await ctx.db
       .select({ count: sql<number>`count(*)` })
-      .from(kerabariAggregateBuilding)
+      .from(gadhawaAggregateBuilding)
       .where(conditions)
       .then((result) => result[0]?.count || 0);
 

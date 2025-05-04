@@ -6,7 +6,7 @@ import {
 } from "../schemas/household-schema";
 import { TRPCError } from "@trpc/server";
 import { eq, sql } from "drizzle-orm";
-import { kerabariAggregateBuilding } from "@/server/db/schema/aggregate-building";
+import { gadhawaAggregateBuilding } from "@/server/db/schema/aggregate-building";
 import { surveyAttachments } from "@/server/db/schema";
 import { generateMediaUrls } from "../utils/media-utils";
 
@@ -16,11 +16,11 @@ export const getHouseholdById = publicProcedure
     // Find the building containing this household
     const buildingQuery = await ctx.db
       .select({
-        building: kerabariAggregateBuilding,
+        building: gadhawaAggregateBuilding,
       })
-      .from(kerabariAggregateBuilding)
+      .from(gadhawaAggregateBuilding)
       .where(
-        sql`${kerabariAggregateBuilding.households} @> jsonb_build_array(jsonb_build_object('id', ${input.id}))`,
+        sql`${gadhawaAggregateBuilding.households} @> jsonb_build_array(jsonb_build_object('id', ${input.id}))`,
       )
       .limit(1);
 
@@ -94,8 +94,8 @@ export const getHouseholdsByBuildingId = publicProcedure
   .query(async ({ ctx, input }) => {
     const building = await ctx.db
       .select()
-      .from(kerabariAggregateBuilding)
-      .where(eq(kerabariAggregateBuilding.id, input.buildingId))
+      .from(gadhawaAggregateBuilding)
+      .where(eq(gadhawaAggregateBuilding.id, input.buildingId))
       .limit(1);
 
     if (!building[0]) {
@@ -138,9 +138,9 @@ export const getHouseholdMembers = publicProcedure
   .query(async ({ ctx, input }) => {
     const building = await ctx.db
       .select()
-      .from(kerabariAggregateBuilding)
+      .from(gadhawaAggregateBuilding)
       .where(
-        sql`${kerabariAggregateBuilding.households} @> jsonb_build_array(jsonb_build_object('id', ${input.householdId}))`,
+        sql`${gadhawaAggregateBuilding.households} @> jsonb_build_array(jsonb_build_object('id', ${input.householdId}))`,
       )
       .limit(1);
 
@@ -184,9 +184,9 @@ export const getHouseholdCrops = publicProcedure
   .query(async ({ ctx, input }) => {
     const building = await ctx.db
       .select()
-      .from(kerabariAggregateBuilding)
+      .from(gadhawaAggregateBuilding)
       .where(
-        sql`${kerabariAggregateBuilding.households} @> jsonb_build_array(jsonb_build_object('id', ${input.householdId}))`,
+        sql`${gadhawaAggregateBuilding.households} @> jsonb_build_array(jsonb_build_object('id', ${input.householdId}))`,
       )
       .limit(1);
 
@@ -227,9 +227,9 @@ export const getHouseholdAnimals = publicProcedure
   .query(async ({ ctx, input }) => {
     const building = await ctx.db
       .select()
-      .from(kerabariAggregateBuilding)
+      .from(gadhawaAggregateBuilding)
       .where(
-        sql`${kerabariAggregateBuilding.households} @> jsonb_build_array(jsonb_build_object('id', ${input.householdId}))`,
+        sql`${gadhawaAggregateBuilding.households} @> jsonb_build_array(jsonb_build_object('id', ${input.householdId}))`,
       )
       .limit(1);
 
@@ -270,9 +270,9 @@ export const getHouseholdLands = publicProcedure
   .query(async ({ ctx, input }) => {
     const building = await ctx.db
       .select()
-      .from(kerabariAggregateBuilding)
+      .from(gadhawaAggregateBuilding)
       .where(
-        sql`${kerabariAggregateBuilding.households} @> jsonb_build_array(jsonb_build_object('id', ${input.householdId}))`,
+        sql`${gadhawaAggregateBuilding.households} @> jsonb_build_array(jsonb_build_object('id', ${input.householdId}))`,
       )
       .limit(1);
 
@@ -316,9 +316,9 @@ export const getHouseholdAnimalProducts = publicProcedure
   .query(async ({ ctx, input }) => {
     const building = await ctx.db
       .select()
-      .from(kerabariAggregateBuilding)
+      .from(gadhawaAggregateBuilding)
       .where(
-        sql`${kerabariAggregateBuilding.households} @> jsonb_build_array(jsonb_build_object('id', ${input.householdId}))`,
+        sql`${gadhawaAggregateBuilding.households} @> jsonb_build_array(jsonb_build_object('id', ${input.householdId}))`,
       )
       .limit(1);
 
@@ -362,9 +362,9 @@ export const getHouseholdDeaths = publicProcedure
   .query(async ({ ctx, input }) => {
     const building = await ctx.db
       .select()
-      .from(kerabariAggregateBuilding)
+      .from(gadhawaAggregateBuilding)
       .where(
-        sql`${kerabariAggregateBuilding.households} @> jsonb_build_array(jsonb_build_object('id', ${input.householdId}))`,
+        sql`${gadhawaAggregateBuilding.households} @> jsonb_build_array(jsonb_build_object('id', ${input.householdId}))`,
       )
       .limit(1);
 
@@ -405,9 +405,9 @@ export const getHouseholdAbsentees = publicProcedure
   .query(async ({ ctx, input }) => {
     const building = await ctx.db
       .select()
-      .from(kerabariAggregateBuilding)
+      .from(gadhawaAggregateBuilding)
       .where(
-        sql`${kerabariAggregateBuilding.households} @> jsonb_build_array(jsonb_build_object('id', ${input.householdId}))`,
+        sql`${gadhawaAggregateBuilding.households} @> jsonb_build_array(jsonb_build_object('id', ${input.householdId}))`,
       )
       .limit(1);
 

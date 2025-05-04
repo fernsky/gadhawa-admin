@@ -2,7 +2,7 @@ import { sql } from "drizzle-orm";
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 import { users, areas, surveyData, wards } from "@/server/db/schema/basic";
-import { kerabariIndividual } from "@/server/db/schema/family/individual";
+import { gadhawaIndividual } from "@/server/db/schema/family/individual";
 import { and, count, eq } from "drizzle-orm";
 import { db } from "@/server/db";
 
@@ -27,16 +27,16 @@ export const getGenderDistribution = publicProcedure
   .query(async ({ ctx, input }) => {
     const query = ctx.db
       .select({
-        gender: kerabariIndividual.gender,
+        gender: gadhawaIndividual.gender,
         count: sql<number>`count(*)::int`,
       })
-      .from(kerabariIndividual);
+      .from(gadhawaIndividual);
 
     if (input.wardNumber) {
-      query.where(eq(kerabariIndividual.wardNo, input.wardNumber));
+      query.where(eq(gadhawaIndividual.wardNo, input.wardNumber));
     }
 
-    return await query.groupBy(kerabariIndividual.gender);
+    return await query.groupBy(gadhawaIndividual.gender);
   });
 
 export const getAgeDistribution = publicProcedure
@@ -56,7 +56,7 @@ export const getAgeDistribution = publicProcedure
 
     return await ctx.db.execute(sql`
       SELECT ${sql.raw(ageRanges)} as age_group, COUNT(*)::int as count
-      FROM ${kerabariIndividual}
+      FROM ${gadhawaIndividual}
       WHERE age IS NOT NULL ${wardFilter}
       GROUP BY age_group
       ORDER BY age_group
@@ -68,20 +68,20 @@ export const getCasteDistribution = publicProcedure
   .query(async ({ ctx, input }) => {
     const query = ctx.db
       .select({
-        caste: kerabariIndividual.caste,
+        caste: gadhawaIndividual.caste,
         count: sql<number>`count(*)::int`,
       })
-      .from(kerabariIndividual)
+      .from(gadhawaIndividual)
       .where(
         input.wardNumber
           ? and(
-              sql`${kerabariIndividual.caste} IS NOT NULL`,
-              eq(kerabariIndividual.wardNo, input.wardNumber)
+              sql`${gadhawaIndividual.caste} IS NOT NULL`,
+              eq(gadhawaIndividual.wardNo, input.wardNumber)
             )
-          : sql`${kerabariIndividual.caste} IS NOT NULL`
+          : sql`${gadhawaIndividual.caste} IS NOT NULL`
       );
 
-    return await query.groupBy(kerabariIndividual.caste);
+    return await query.groupBy(gadhawaIndividual.caste);
   });
 
 export const getAncestorLanguageDistribution = publicProcedure
@@ -89,20 +89,20 @@ export const getAncestorLanguageDistribution = publicProcedure
   .query(async ({ ctx, input }) => {
     const query = ctx.db
       .select({
-        language: kerabariIndividual.ancestorLanguage,
+        language: gadhawaIndividual.ancestorLanguage,
         count: sql<number>`count(*)::int`,
       })
-      .from(kerabariIndividual)
+      .from(gadhawaIndividual)
       .where(
         input.wardNumber
           ? and(
-              sql`${kerabariIndividual.ancestorLanguage} IS NOT NULL`,
-              eq(kerabariIndividual.wardNo, input.wardNumber)
+              sql`${gadhawaIndividual.ancestorLanguage} IS NOT NULL`,
+              eq(gadhawaIndividual.wardNo, input.wardNumber)
             )
-          : sql`${kerabariIndividual.ancestorLanguage} IS NOT NULL`
+          : sql`${gadhawaIndividual.ancestorLanguage} IS NOT NULL`
       );
 
-    return await query.groupBy(kerabariIndividual.ancestorLanguage);
+    return await query.groupBy(gadhawaIndividual.ancestorLanguage);
   });
 
 export const getMotherTongueDistribution = publicProcedure
@@ -110,20 +110,20 @@ export const getMotherTongueDistribution = publicProcedure
   .query(async ({ ctx, input }) => {
     const query = ctx.db
       .select({
-        language: kerabariIndividual.primaryMotherTongue,
+        language: gadhawaIndividual.primaryMotherTongue,
         count: sql<number>`count(*)::int`,
       })
-      .from(kerabariIndividual)
+      .from(gadhawaIndividual)
       .where(
         input.wardNumber
           ? and(
-              sql`${kerabariIndividual.primaryMotherTongue} IS NOT NULL`,
-              eq(kerabariIndividual.wardNo, input.wardNumber)
+              sql`${gadhawaIndividual.primaryMotherTongue} IS NOT NULL`,
+              eq(gadhawaIndividual.wardNo, input.wardNumber)
             )
-          : sql`${kerabariIndividual.primaryMotherTongue} IS NOT NULL`
+          : sql`${gadhawaIndividual.primaryMotherTongue} IS NOT NULL`
       );
 
-    return await query.groupBy(kerabariIndividual.primaryMotherTongue);
+    return await query.groupBy(gadhawaIndividual.primaryMotherTongue);
   });
 
 export const getReligionDistribution = publicProcedure
@@ -131,20 +131,20 @@ export const getReligionDistribution = publicProcedure
   .query(async ({ ctx, input }) => {
     const query = ctx.db
       .select({
-        religion: kerabariIndividual.religion,
+        religion: gadhawaIndividual.religion,
         count: sql<number>`count(*)::int`,
       })
-      .from(kerabariIndividual)
+      .from(gadhawaIndividual)
       .where(
         input.wardNumber
           ? and(
-              sql`${kerabariIndividual.religion} IS NOT NULL`,
-              eq(kerabariIndividual.wardNo, input.wardNumber)
+              sql`${gadhawaIndividual.religion} IS NOT NULL`,
+              eq(gadhawaIndividual.wardNo, input.wardNumber)
             )
-          : sql`${kerabariIndividual.religion} IS NOT NULL`
+          : sql`${gadhawaIndividual.religion} IS NOT NULL`
       );
 
-    return await query.groupBy(kerabariIndividual.religion);
+    return await query.groupBy(gadhawaIndividual.religion);
   });
 
 export const getMaritalStatusDistribution = publicProcedure
@@ -152,20 +152,20 @@ export const getMaritalStatusDistribution = publicProcedure
   .query(async ({ ctx, input }) => {
     const query = ctx.db
       .select({
-        status: kerabariIndividual.maritalStatus,
+        status: gadhawaIndividual.maritalStatus,
         count: sql<number>`count(*)::int`,
       })
-      .from(kerabariIndividual)
+      .from(gadhawaIndividual)
       .where(
         input.wardNumber
           ? and(
-              sql`${kerabariIndividual.maritalStatus} IS NOT NULL`,
-              eq(kerabariIndividual.wardNo, input.wardNumber)
+              sql`${gadhawaIndividual.maritalStatus} IS NOT NULL`,
+              eq(gadhawaIndividual.wardNo, input.wardNumber)
             )
-          : sql`${kerabariIndividual.maritalStatus} IS NOT NULL`
+          : sql`${gadhawaIndividual.maritalStatus} IS NOT NULL`
       );
 
-    return await query.groupBy(kerabariIndividual.maritalStatus);
+    return await query.groupBy(gadhawaIndividual.maritalStatus);
   });
 
 export const getMarriageAgeDistribution = publicProcedure
@@ -184,7 +184,7 @@ export const getMarriageAgeDistribution = publicProcedure
 
     return await ctx.db.execute(sql`
       SELECT ${sql.raw(ageRanges)} as age_group, COUNT(*)::int as count
-      FROM ${kerabariIndividual}
+      FROM ${gadhawaIndividual}
       WHERE married_age IS NOT NULL ${wardFilter}
       GROUP BY age_group
       ORDER BY age_group
@@ -196,20 +196,20 @@ export const getDisabilityDistribution = publicProcedure
   .query(async ({ ctx, input }) => {
     const query = ctx.db
       .select({
-        isDisabled: kerabariIndividual.isDisabled,
+        isDisabled: gadhawaIndividual.isDisabled,
         count: sql<number>`count(*)::int`,
       })
-      .from(kerabariIndividual)
+      .from(gadhawaIndividual)
       .where(
         input.wardNumber
           ? and(
-              sql`${kerabariIndividual.isDisabled} IS NOT NULL`,
-              eq(kerabariIndividual.wardNo, input.wardNumber)
+              sql`${gadhawaIndividual.isDisabled} IS NOT NULL`,
+              eq(gadhawaIndividual.wardNo, input.wardNumber)
             )
-          : sql`${kerabariIndividual.isDisabled} IS NOT NULL`
+          : sql`${gadhawaIndividual.isDisabled} IS NOT NULL`
       );
 
-    return await query.groupBy(kerabariIndividual.isDisabled);
+    return await query.groupBy(gadhawaIndividual.isDisabled);
   });
 
 export const getSubmissionStats = publicProcedure

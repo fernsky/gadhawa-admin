@@ -6,7 +6,7 @@ import {
 } from "../schemas/business-schema";
 import { TRPCError } from "@trpc/server";
 import { eq, sql } from "drizzle-orm";
-import { kerabariAggregateBuilding } from "@/server/db/schema/aggregate-building";
+import { gadhawaAggregateBuilding } from "@/server/db/schema/aggregate-building";
 import { surveyAttachments } from "@/server/db/schema";
 import { generateMediaUrls } from "../utils/media-utils";
 
@@ -16,11 +16,11 @@ export const getBusinessById = publicProcedure
     // Find the building containing this business
     const buildingQuery = await ctx.db
       .select({
-        building: kerabariAggregateBuilding,
+        building: gadhawaAggregateBuilding,
       })
-      .from(kerabariAggregateBuilding)
+      .from(gadhawaAggregateBuilding)
       .where(
-        sql`${kerabariAggregateBuilding.businesses} @> jsonb_build_array(jsonb_build_object('id', ${input.id}))`,
+        sql`${gadhawaAggregateBuilding.businesses} @> jsonb_build_array(jsonb_build_object('id', ${input.id}))`,
       )
       .limit(1);
 
@@ -78,8 +78,8 @@ export const getBusinessesByBuildingId = publicProcedure
   .query(async ({ ctx, input }) => {
     const building = await ctx.db
       .select()
-      .from(kerabariAggregateBuilding)
-      .where(eq(kerabariAggregateBuilding.id, input.buildingId))
+      .from(gadhawaAggregateBuilding)
+      .where(eq(gadhawaAggregateBuilding.id, input.buildingId))
       .limit(1);
 
     if (!building[0]) {
@@ -127,9 +127,9 @@ export const getBusinessCrops = publicProcedure
   .query(async ({ ctx, input }) => {
     const building = await ctx.db
       .select()
-      .from(kerabariAggregateBuilding)
+      .from(gadhawaAggregateBuilding)
       .where(
-        sql`${kerabariAggregateBuilding.businesses} @> jsonb_build_array(jsonb_build_object('id', ${input.businessId}))`,
+        sql`${gadhawaAggregateBuilding.businesses} @> jsonb_build_array(jsonb_build_object('id', ${input.businessId}))`,
       )
       .limit(1);
 
@@ -170,9 +170,9 @@ export const getBusinessAnimals = publicProcedure
   .query(async ({ ctx, input }) => {
     const building = await ctx.db
       .select()
-      .from(kerabariAggregateBuilding)
+      .from(gadhawaAggregateBuilding)
       .where(
-        sql`${kerabariAggregateBuilding.businesses} @> jsonb_build_array(jsonb_build_object('id', ${input.businessId}))`,
+        sql`${gadhawaAggregateBuilding.businesses} @> jsonb_build_array(jsonb_build_object('id', ${input.businessId}))`,
       )
       .limit(1);
 
@@ -213,9 +213,9 @@ export const getBusinessAnimalProducts = publicProcedure
   .query(async ({ ctx, input }) => {
     const building = await ctx.db
       .select()
-      .from(kerabariAggregateBuilding)
+      .from(gadhawaAggregateBuilding)
       .where(
-        sql`${kerabariAggregateBuilding.businesses} @> jsonb_build_array(jsonb_build_object('id', ${input.businessId}))`,
+        sql`${gadhawaAggregateBuilding.businesses} @> jsonb_build_array(jsonb_build_object('id', ${input.businessId}))`,
       )
       .limit(1);
 

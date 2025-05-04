@@ -2,27 +2,27 @@ import { sql } from "drizzle-orm";
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 import { and, count, eq } from "drizzle-orm";
-import kerabariAgriculturalLand from "@/server/db/schema/family/agricultural-lands";
-import { kerabariCrop } from "@/server/db/schema/family/crops";
-import { kerabariAnimal } from "@/server/db/schema/family/animals";
-import { kerabariAnimalProduct } from "@/server/db/schema/family/animal-products";
+import gadhawaAgriculturalLand from "@/server/db/schema/family/agricultural-lands";
+import { gadhawaCrop } from "@/server/db/schema/family/crops";
+import { gadhawaAnimal } from "@/server/db/schema/family/animals";
+import { gadhawaAnimalProduct } from "@/server/db/schema/family/animal-products";
 
 export const getAgriculturalLandStats = publicProcedure
   .input(z.object({ wardNumber: z.number().optional() }))
   .query(async ({ ctx, input }) => {
     const query = ctx.db
       .select({
-        ownershipType: kerabariAgriculturalLand.landOwnershipType,
-        totalArea: sql<number>`sum(${kerabariAgriculturalLand.landArea})::float`,
+        ownershipType: gadhawaAgriculturalLand.landOwnershipType,
+        totalArea: sql<number>`sum(${gadhawaAgriculturalLand.landArea})::float`,
         count: sql<number>`count(*)::int`,
       })
-      .from(kerabariAgriculturalLand);
+      .from(gadhawaAgriculturalLand);
 
     if (input.wardNumber) {
-      query.where(eq(kerabariAgriculturalLand.wardNo, input.wardNumber));
+      query.where(eq(gadhawaAgriculturalLand.wardNo, input.wardNumber));
     }
 
-    return await query.groupBy(kerabariAgriculturalLand.landOwnershipType);
+    return await query.groupBy(gadhawaAgriculturalLand.landOwnershipType);
   });
 
 export const getIrrigationStats = publicProcedure
@@ -30,17 +30,17 @@ export const getIrrigationStats = publicProcedure
   .query(async ({ ctx, input }) => {
     const query = ctx.db
       .select({
-        isIrrigated: kerabariAgriculturalLand.isLandIrrigated,
-        totalArea: sql<number>`sum(${kerabariAgriculturalLand.irrigatedLandArea})::float`,
+        isIrrigated: gadhawaAgriculturalLand.isLandIrrigated,
+        totalArea: sql<number>`sum(${gadhawaAgriculturalLand.irrigatedLandArea})::float`,
         count: sql<number>`count(*)::int`,
       })
-      .from(kerabariAgriculturalLand);
+      .from(gadhawaAgriculturalLand);
 
     if (input.wardNumber) {
-      query.where(eq(kerabariAgriculturalLand.wardNo, input.wardNumber));
+      query.where(eq(gadhawaAgriculturalLand.wardNo, input.wardNumber));
     }
 
-    return await query.groupBy(kerabariAgriculturalLand.isLandIrrigated);
+    return await query.groupBy(gadhawaAgriculturalLand.isLandIrrigated);
   });
 
 export const getCropStats = publicProcedure
@@ -48,20 +48,20 @@ export const getCropStats = publicProcedure
   .query(async ({ ctx, input }) => {
     const query = ctx.db
       .select({
-        cropType: kerabariCrop.cropType,
-        cropName: kerabariCrop.cropName,
-        totalArea: sql<number>`sum(${kerabariCrop.cropArea})::float`,
-        totalProduction: sql<number>`sum(${kerabariCrop.cropProduction})::float`,
-        totalRevenue: sql<number>`sum(${kerabariCrop.cropRevenue})::float`,
+        cropType: gadhawaCrop.cropType,
+        cropName: gadhawaCrop.cropName,
+        totalArea: sql<number>`sum(${gadhawaCrop.cropArea})::float`,
+        totalProduction: sql<number>`sum(${gadhawaCrop.cropProduction})::float`,
+        totalRevenue: sql<number>`sum(${gadhawaCrop.cropRevenue})::float`,
         count: sql<number>`count(*)::int`,
       })
-      .from(kerabariCrop);
+      .from(gadhawaCrop);
 
     if (input.wardNumber) {
-      query.where(eq(kerabariCrop.wardNo, input.wardNumber));
+      query.where(eq(gadhawaCrop.wardNo, input.wardNumber));
     }
 
-    return await query.groupBy(kerabariCrop.cropType, kerabariCrop.cropName);
+    return await query.groupBy(gadhawaCrop.cropType, gadhawaCrop.cropName);
   });
 
 export const getAnimalStats = publicProcedure
@@ -69,19 +69,19 @@ export const getAnimalStats = publicProcedure
   .query(async ({ ctx, input }) => {
     const query = ctx.db
       .select({
-        animalName: kerabariAnimal.animalName,
-        totalCount: sql<number>`sum(${kerabariAnimal.totalAnimals})::int`,
-        totalSales: sql<number>`sum(${kerabariAnimal.animalSales})::float`,
-        totalRevenue: sql<number>`sum(${kerabariAnimal.animalRevenue})::float`,
+        animalName: gadhawaAnimal.animalName,
+        totalCount: sql<number>`sum(${gadhawaAnimal.totalAnimals})::int`,
+        totalSales: sql<number>`sum(${gadhawaAnimal.animalSales})::float`,
+        totalRevenue: sql<number>`sum(${gadhawaAnimal.animalRevenue})::float`,
         householdCount: sql<number>`count(*)::int`,
       })
-      .from(kerabariAnimal);
+      .from(gadhawaAnimal);
 
     if (input.wardNumber) {
-      query.where(eq(kerabariAnimal.wardNo, input.wardNumber));
+      query.where(eq(gadhawaAnimal.wardNo, input.wardNumber));
     }
 
-    return await query.groupBy(kerabariAnimal.animalName);
+    return await query.groupBy(gadhawaAnimal.animalName);
   });
 
 export const getAnimalProductStats = publicProcedure
@@ -89,22 +89,22 @@ export const getAnimalProductStats = publicProcedure
   .query(async ({ ctx, input }) => {
     const query = ctx.db
       .select({
-        productName: kerabariAnimalProduct.animalProductName,
-        unit: kerabariAnimalProduct.animalProductUnit,
-        totalProduction: sql<number>`sum(${kerabariAnimalProduct.animalProductProduction})::float`,
-        totalSales: sql<number>`sum(${kerabariAnimalProduct.animalProductSales})::float`,
-        totalRevenue: sql<number>`sum(${kerabariAnimalProduct.animalProductRevenue})::float`,
+        productName: gadhawaAnimalProduct.animalProductName,
+        unit: gadhawaAnimalProduct.animalProductUnit,
+        totalProduction: sql<number>`sum(${gadhawaAnimalProduct.animalProductProduction})::float`,
+        totalSales: sql<number>`sum(${gadhawaAnimalProduct.animalProductSales})::float`,
+        totalRevenue: sql<number>`sum(${gadhawaAnimalProduct.animalProductRevenue})::float`,
         householdCount: sql<number>`count(*)::int`,
       })
-      .from(kerabariAnimalProduct);
+      .from(gadhawaAnimalProduct);
 
     if (input.wardNumber) {
-      query.where(eq(kerabariAnimalProduct.wardNo, input.wardNumber));
+      query.where(eq(gadhawaAnimalProduct.wardNo, input.wardNumber));
     }
 
     return await query.groupBy(
-      kerabariAnimalProduct.animalProductName,
-      kerabariAnimalProduct.animalProductUnit
+      gadhawaAnimalProduct.animalProductName,
+      gadhawaAnimalProduct.animalProductUnit
     );
   });
 
@@ -113,14 +113,14 @@ export const getAgriculturalLandOverview = publicProcedure
   .query(async ({ ctx, input }) => {
     const query = ctx.db
       .select({
-        totalLandArea: sql<number>`sum(${kerabariAgriculturalLand.landArea})::float`,
-        totalIrrigatedArea: sql<number>`sum(${kerabariAgriculturalLand.irrigatedLandArea})::float`,
-        householdCount: sql<number>`count(distinct ${kerabariAgriculturalLand.familyId})::int`,
+        totalLandArea: sql<number>`sum(${gadhawaAgriculturalLand.landArea})::float`,
+        totalIrrigatedArea: sql<number>`sum(${gadhawaAgriculturalLand.irrigatedLandArea})::float`,
+        householdCount: sql<number>`count(distinct ${gadhawaAgriculturalLand.familyId})::int`,
       })
-      .from(kerabariAgriculturalLand);
+      .from(gadhawaAgriculturalLand);
 
     if (input.wardNumber) {
-      query.where(eq(kerabariAgriculturalLand.wardNo, input.wardNumber));
+      query.where(eq(gadhawaAgriculturalLand.wardNo, input.wardNumber));
     }
 
     return (await query)[0];
@@ -139,7 +139,7 @@ export const getAgricultureOverview = publicProcedure
           COUNT(DISTINCT family_id)::int as total_households,
           SUM(crop_revenue)::float as total_revenue,
           SUM(crop_area)::float as total_area
-        FROM ${kerabariCrop}
+        FROM ${gadhawaCrop}
         WHERE ${baseWhere}
       `),
       ctx.db.execute(sql`
@@ -147,14 +147,14 @@ export const getAgricultureOverview = publicProcedure
           COUNT(DISTINCT family_id)::int as total_households,
           SUM(animal_revenue)::float as total_revenue,
           SUM(total_animals)::int as total_count
-        FROM ${kerabariAnimal}
+        FROM ${gadhawaAnimal}
         WHERE ${baseWhere}
       `),
       ctx.db.execute(sql`
         SELECT 
           COUNT(DISTINCT family_id)::int as total_households,
           SUM(animal_product_revenue)::float as total_revenue
-        FROM ${kerabariAnimalProduct}
+        FROM ${gadhawaAnimalProduct}
         WHERE ${baseWhere}
       `),
     ]);

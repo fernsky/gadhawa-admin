@@ -25,7 +25,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { formatDate } from "@/lib/utils";
-import { KerabariAggregateBuilding } from "@/server/db/schema/aggregate-building";
+import { gadhawaAggregateBuilding } from "@/server/db/schema/aggregate-building";
 
 export function AggregateGridView() {
   const {

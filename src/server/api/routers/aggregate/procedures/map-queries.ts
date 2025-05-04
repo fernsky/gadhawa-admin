@@ -6,7 +6,7 @@ import {
 } from "../schemas/map-schema";
 import { TRPCError } from "@trpc/server";
 import { and, eq, sql, between } from "drizzle-orm";
-import { kerabariAggregateBuilding } from "@/server/db/schema/aggregate-building";
+import { gadhawaAggregateBuilding } from "@/server/db/schema/aggregate-building";
 import { generateMediaUrls } from "../utils/media-utils";
 import { surveyAttachments } from "@/server/db/schema";
 
@@ -45,51 +45,51 @@ export const getMapEntities = publicProcedure
     // Apply bounding box filter for points that have valid coordinates
     // Use sql template literal to ensure proper casting and comparison
     conditions.push(sql`
-      ${kerabariAggregateBuilding.building_gps_latitude}::numeric BETWEEN ${south.toString()}::numeric AND ${north.toString()}::numeric AND
-      ${kerabariAggregateBuilding.building_gps_longitude}::numeric BETWEEN ${west.toString()}::numeric AND ${east.toString()}::numeric
+      ${gadhawaAggregateBuilding.building_gps_latitude}::numeric BETWEEN ${south.toString()}::numeric AND ${north.toString()}::numeric AND
+      ${gadhawaAggregateBuilding.building_gps_longitude}::numeric BETWEEN ${west.toString()}::numeric AND ${east.toString()}::numeric
     `);
 
     // Apply optional filters
     if (wardId) {
       conditions.push(
-        eq(kerabariAggregateBuilding.ward_number, parseInt(wardId)),
+        eq(gadhawaAggregateBuilding.ward_number, parseInt(wardId)),
       );
     }
 
     if (areaCode) {
       conditions.push(
-        eq(kerabariAggregateBuilding.area_code, parseInt(areaCode)),
+        eq(gadhawaAggregateBuilding.area_code, parseInt(areaCode)),
       );
     }
 
     if (enumeratorId) {
       conditions.push(
-        eq(kerabariAggregateBuilding.enumerator_id, enumeratorId),
+        eq(gadhawaAggregateBuilding.enumerator_id, enumeratorId),
       );
     }
 
     if (mapStatus) {
-      conditions.push(eq(kerabariAggregateBuilding.map_status, mapStatus));
+      conditions.push(eq(gadhawaAggregateBuilding.map_status, mapStatus));
     }
 
     // Execute the query with all conditions
     const buildingEntities = await ctx.db
       .select({
-        id: kerabariAggregateBuilding.id,
-        buildingId: kerabariAggregateBuilding.building_id,
-        lat: kerabariAggregateBuilding.building_gps_latitude,
-        lng: kerabariAggregateBuilding.building_gps_longitude,
-        accuracy: kerabariAggregateBuilding.building_gps_accuracy,
-        locality: kerabariAggregateBuilding.locality,
-        wardNumber: kerabariAggregateBuilding.ward_number,
-        areaCode: kerabariAggregateBuilding.area_code,
-        ownerName: kerabariAggregateBuilding.building_owner_name,
-        totalFamilies: kerabariAggregateBuilding.total_families,
-        totalBusinesses: kerabariAggregateBuilding.total_businesses,
+        id: gadhawaAggregateBuilding.id,
+        buildingId: gadhawaAggregateBuilding.building_id,
+        lat: gadhawaAggregateBuilding.building_gps_latitude,
+        lng: gadhawaAggregateBuilding.building_gps_longitude,
+        accuracy: gadhawaAggregateBuilding.building_gps_accuracy,
+        locality: gadhawaAggregateBuilding.locality,
+        wardNumber: gadhawaAggregateBuilding.ward_number,
+        areaCode: gadhawaAggregateBuilding.area_code,
+        ownerName: gadhawaAggregateBuilding.building_owner_name,
+        totalFamilies: gadhawaAggregateBuilding.total_families,
+        totalBusinesses: gadhawaAggregateBuilding.total_businesses,
       })
-      .from(kerabariAggregateBuilding)
+      .from(gadhawaAggregateBuilding)
       .where(and(...conditions))
-      .orderBy(kerabariAggregateBuilding.created_at)
+      .orderBy(gadhawaAggregateBuilding.created_at)
       .limit(limit);
 
     // Process the results into clusters or individual entities based on zoom level
@@ -207,8 +207,8 @@ export const getMapEntityById = publicProcedure
       // Fetch the building data
       const building = await ctx.db
         .select()
-        .from(kerabariAggregateBuilding)
-        .where(eq(kerabariAggregateBuilding.id, id))
+        .from(gadhawaAggregateBuilding)
+        .where(eq(gadhawaAggregateBuilding.id, id))
         .limit(1);
 
       if (!building[0]) {
@@ -255,15 +255,15 @@ export const getMapEntityById = publicProcedure
       // Find the entity in the appropriate JSONB array of the building
       const jsonbField =
         type === "household"
-          ? kerabariAggregateBuilding.households
-          : kerabariAggregateBuilding.businesses;
+          ? gadhawaAggregateBuilding.households
+          : gadhawaAggregateBuilding.businesses;
       const conditionField = type === "household" ? "households" : "businesses";
 
       const buildingQuery = await ctx.db
         .select({
-          building: kerabariAggregateBuilding,
+          building: gadhawaAggregateBuilding,
         })
-        .from(kerabariAggregateBuilding)
+        .from(gadhawaAggregateBuilding)
         .where(
           sql`${jsonbField} @> jsonb_build_array(jsonb_build_object('id', ${id}))`,
         )
@@ -376,21 +376,21 @@ export const getClusterPoints = publicProcedure
     // Query buildings that fall within these bounds - using SQL for proper numeric comparison
     const buildingEntities = await ctx.db
       .select({
-        id: kerabariAggregateBuilding.id,
-        lat: kerabariAggregateBuilding.building_gps_latitude,
-        lng: kerabariAggregateBuilding.building_gps_longitude,
-        locality: kerabariAggregateBuilding.locality,
-        wardNumber: kerabariAggregateBuilding.ward_number,
-        areaCode: kerabariAggregateBuilding.area_code,
-        ownerName: kerabariAggregateBuilding.building_owner_name,
-        totalFamilies: kerabariAggregateBuilding.total_families,
-        totalBusinesses: kerabariAggregateBuilding.total_businesses,
+        id: gadhawaAggregateBuilding.id,
+        lat: gadhawaAggregateBuilding.building_gps_latitude,
+        lng: gadhawaAggregateBuilding.building_gps_longitude,
+        locality: gadhawaAggregateBuilding.locality,
+        wardNumber: gadhawaAggregateBuilding.ward_number,
+        areaCode: gadhawaAggregateBuilding.area_code,
+        ownerName: gadhawaAggregateBuilding.building_owner_name,
+        totalFamilies: gadhawaAggregateBuilding.total_families,
+        totalBusinesses: gadhawaAggregateBuilding.total_businesses,
       })
-      .from(kerabariAggregateBuilding)
+      .from(gadhawaAggregateBuilding)
       .where(
         sql`
-          ${kerabariAggregateBuilding.building_gps_latitude}::numeric BETWEEN ${latMin.toString()}::numeric AND ${latMax.toString()}::numeric AND
-          ${kerabariAggregateBuilding.building_gps_longitude}::numeric BETWEEN ${lngMin.toString()}::numeric AND ${lngMax.toString()}::numeric
+          ${gadhawaAggregateBuilding.building_gps_latitude}::numeric BETWEEN ${latMin.toString()}::numeric AND ${latMax.toString()}::numeric AND
+          ${gadhawaAggregateBuilding.building_gps_longitude}::numeric BETWEEN ${lngMin.toString()}::numeric AND ${lngMax.toString()}::numeric
         `,
       )
       .limit(limit);
