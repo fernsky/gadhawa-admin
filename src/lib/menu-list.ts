@@ -14,12 +14,9 @@ import {
   Paperclip,
   Home,
   PersonStanding,
-<<<<<<< HEAD
   Watch,
   Gauge,
-=======
   Cloud,
->>>>>>> 92da42032cf37bc21a2a972359ee9fa2e57a0eb3
 } from "lucide-react";
 
 export type Role = "admin" | "superadmin" | "enumerator";
@@ -117,7 +114,6 @@ const menuConfig: Menu[] = [
     submenus: [],
   },
   {
-<<<<<<< HEAD
     href: "/cbs-comparison",
     label: "CBS Comparison",
     icon: Gauge, 
@@ -127,12 +123,7 @@ const menuConfig: Menu[] = [
   {
     href:"/wardwise",
     label: "Wardwise Data",
-    icon:Home,
-=======
-    href: "/wardwise",
-    label: "वडागत डाटा",
     icon: Home,
->>>>>>> 92da42032cf37bc21a2a972359ee9fa2e57a0eb3
     roles: ["admin", "superadmin"],
     submenus: [],
   },
