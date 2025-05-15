@@ -174,7 +174,7 @@ export const familyEditRequests = pgTable("gadhawa_family_edit_requests", {
 export type FamilyEditRequest = typeof familyEditRequests.$inferSelect;
 export type FamilySchema = typeof family.$inferSelect;
 
-export const familyWithUpdatedNames = pgTable("kerabari_family_with_updated_names", {
+export const familyWithUpdatedNames = pgTable("gadhawa_family_with_updated_names", {
   id: text("id"),
   enumeratorName: text("enumerator_name"),
   mainEnumeratorName: text("main_enumerator_name"),

@@ -286,7 +286,7 @@ export type BusinessEditRequest = typeof businessEditRequests.$inferSelect;
 export type StagingBusiness = typeof stagingBusiness.$inferSelect;
 export type BusinessSchema = typeof business.$inferSelect;
 
-export const businessWithUpdatedNames = pgTable("kerabari_business_with_updated_names", {
+export const businessWithUpdatedNames = pgTable("gadhawa_business_with_updated_names", {
   id: varchar("id", { length: 48 }),
   enumeratorName: varchar("enumerator_name", { length: 255 }),
   mainEnumeratorName: varchar("main_enumerator_name", { length: 255 }),

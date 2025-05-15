@@ -179,7 +179,7 @@ export const buildingTokens = pgTable("gadhawa_building_tokens", {
 
 export type BuildingToken = typeof buildingTokens.$inferSelect;
 
-export const buildingsWithUpdatedNames = pgTable("kerabari_buildings_with_updated_names", {
+export const buildingsWithUpdatedNames = pgTable("gadhawa_buildings_with_updated_names", {
   id: varchar("id", { length: 48 }),
   surveyDate: timestamp("survey_date"),
   enumeratorName: varchar("enumerator_name", { length: 255 }),

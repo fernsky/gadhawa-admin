@@ -14,8 +14,12 @@ import {
   Paperclip,
   Home,
   PersonStanding,
+<<<<<<< HEAD
   Watch,
   Gauge,
+=======
+  Cloud,
+>>>>>>> 92da42032cf37bc21a2a972359ee9fa2e57a0eb3
 } from "lucide-react";
 
 export type Role = "admin" | "superadmin" | "enumerator";
@@ -44,75 +48,76 @@ type Group = {
 const menuConfig: Menu[] = [
   {
     href: "/",
-    label: "Home",
+    label: "गृहपृष्ठ",
     icon: LayoutGrid,
     roles: ["admin", "superadmin", "enumerator"],
   },
   {
     href: "/qr-code",
-    label: "QR Code",
+    label: "क्यूआर कोड",
     icon: ScanBarcode,
     roles: ["enumerator"],
   },
   {
     href: "/requested-areas",
-    label: "Requested Areas",
+    label: "अनुरोध गरिएका क्षेत्रहरू",
     icon: LandPlot,
     roles: ["enumerator"],
   },
   {
     href: "/account",
-    label: "User Account", 
+    label: "प्रयोगकर्ता खाता",
     icon: User2Icon,
     roles: ["enumerator"],
   },
   {
     href: "/collections",
-    label: "My Collections", 
+    label: "मेरो संकलनहरू",
     icon: Paperclip,
     roles: ["enumerator"],
   },
-  
+
   {
     href: "/ward",
-    label: "Wards",
+    label: "वडाहरू",
     icon: AreaChart,
     roles: ["admin", "superadmin"],
     submenus: [],
   },
   {
-    href: "/area", 
-    label: "Areas",
+    href: "/area",
+    label: "क्षेत्रहरू",
     icon: LandPlot,
     roles: ["admin", "superadmin"],
     submenus: [],
   },
   {
     href: "/buildings",
-    label: "Buildings",
+    label: "भवनहरू",
     icon: Building2,
     roles: ["admin", "superadmin"],
   },
   {
     href: "/businesses",
-    label: "Businesses", 
+    label: "व्यवसायहरू",
     icon: Store,
     roles: ["admin", "superadmin"],
   },
   {
     href: "/families",
-    label: "Families",
+    label: "परिवारहरू",
     icon: UsersRound,
     roles: ["admin", "superadmin"],
   },
-{
+  {
     href: "/submissions",
-    label: "Submissions",
-    icon: Paperclip, 
+    label: "पेश गरिएका डाटा",
+    icon: Paperclip,
     roles: ["admin", "superadmin"],
     submenus: [],
   },
   {
+<<<<<<< HEAD
     href: "/cbs-comparison",
     label: "CBS Comparison",
     icon: Gauge, 
@@ -123,32 +128,44 @@ const menuConfig: Menu[] = [
     href:"/wardwise",
     label: "Wardwise Data",
     icon:Home,
+=======
+    href: "/wardwise",
+    label: "वडागत डाटा",
+    icon: Home,
+>>>>>>> 92da42032cf37bc21a2a972359ee9fa2e57a0eb3
     roles: ["admin", "superadmin"],
-    submenus:[],
+    submenus: [],
   },
- {
-    href:"/enumeratorwise",
-    label: "Enumerator Wise Data",
-    icon:PersonStanding,
+  {
+    href: "/enumeratorwise",
+    label: "सर्वेक्षक अनुसार डाटा",
+    icon: PersonStanding,
     roles: ["admin", "superadmin"],
-    submenus:[],
+    submenus: [],
+  },
+  {
+    href: "/aggregate",
+    label: "समग्र डाटा",
+    icon: Cloud,
+    roles: ["admin", "superadmin"],
+    submenus: [],
   },
   {
     href: "/individuals",
-    label: "Individuals",
+    label: "व्यक्तिहरू",
     icon: User2Icon,
     roles: ["admin", "superadmin"],
   },
   {
     href: "/deaths",
-    label: "Deaths",
+    label: "मृत्युहरू",
     icon: GitPullRequest,
     roles: ["admin", "superadmin"],
   },
   {
     href: "/enumerators",
-    label: "Enumerators",
-    icon: UsersRound, 
+    label: "सर्वेक्षकहरू",
+    icon: UsersRound,
     roles: ["admin", "superadmin"],
     submenus: [],
   },
