@@ -17,6 +17,8 @@ import {
   Watch,
   Gauge,
   Cloud,
+  Clock,
+  PlusCircle,
 } from "lucide-react";
 
 export type Role = "admin" | "superadmin" | "enumerator";
@@ -110,6 +112,19 @@ const menuConfig: Menu[] = [
     href: "/submissions",
     label: "पेश गरिएका डाटा",
     icon: Paperclip,
+    roles: ["admin", "superadmin"],
+    submenus: [],
+  },
+   {
+    href: "/aggregate",
+    label: "Aggregate Data",
+    icon: PlusCircle,
+    roles: ["admin", "superadmin", "enumerator"],
+  },
+  {
+    href: "/remaining-locations",
+    label: "Remaining Locations",
+    icon: Clock,
     roles: ["admin", "superadmin"],
     submenus: [],
   },
