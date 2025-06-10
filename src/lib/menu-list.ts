@@ -1,4 +1,4 @@
-import { PersonIcon } from "@radix-ui/react-icons";
+import { PaperPlaneIcon, PersonIcon } from "@radix-ui/react-icons";
 import {
   LayoutGrid,
   LucideIcon,
@@ -117,8 +117,15 @@ const menuConfig: Menu[] = [
     submenus: [],
   },
   {
+    href: "/submitted-forms",
+    label: "Submitted Forms",
+    icon: Send,
+    roles: ["admin", "superadmin"],
+    submenus: [],
+  },
+  {
     href: "/form-archive",
-    label: "Physical Form Submission",
+    label: "Form Archive",
     icon: FormInput,
     roles: ["admin", "superadmin", "enumerator"],
     submenus: [],
